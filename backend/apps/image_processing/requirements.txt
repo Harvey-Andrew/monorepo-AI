@@ -2,7 +2,7 @@
 # 包含 denoising、classification、similarity 三个模块的所有依赖
 
 #  GPU的pytorch
-# --extra-index-url https://download.pytorch.org/whl/cu121
+--extra-index-url https://download.pytorch.org/whl/cu121
 
 # 深度学习核心
 torch>=2.0.0
