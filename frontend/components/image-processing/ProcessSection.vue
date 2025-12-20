@@ -202,7 +202,7 @@
             <span class="loading-text">识别中...</span>
           </template>
           <template v-else-if="classificationResult">
-            <el-tag type="warning" size="large">
+            <el-tag type="warning" size="large" class="classification-tag">
               {{ classificationResult }}
             </el-tag>
           </template>
@@ -479,5 +479,13 @@ const handleFileInputChange = (event: Event) => {
   &:hover {
     transform: translateY(-4px);
   }
+}
+
+// 分类结果标签放大样式
+.classification-tag {
+  font-size: 32px !important;
+  padding: 16px 32px !important;
+  height: auto !important;
+  line-height: 1.5 !important;
 }
 </style>

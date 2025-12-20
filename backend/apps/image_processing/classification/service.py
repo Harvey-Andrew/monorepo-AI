@@ -23,7 +23,7 @@ def init_model(model_path: str, device: torch.device):
     _model.load_state_dict(torch.load(model_path, map_location=device))
     _model.to(device)
     _model.eval()
-    print(f"分类模型加载完毕 (device: {device})")
+    # print(f"分类模型加载完毕 (device: {device})")
 
 
 def get_model() -> Classifier:

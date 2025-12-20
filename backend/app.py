@@ -92,7 +92,7 @@ async def root():
 async def startup():
     from apps.image_processing import init_all_models
     
-    print("Initializing models...")
+    # print("Initializing models...")
     init_all_models()
     register_routes()
     print("Service started!")

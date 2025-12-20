@@ -18,17 +18,10 @@ html {
 }
 
 body {
-  font-family: var(--font-family);
-  font-size: var(--font-size-md);
-  color: var(--color-text-primary);
-  background: linear-gradient(
-    135deg,
-    #f5f7fa 0%,
-    #e4e8f0 25%,
-    #f0e6fa 50%,
-    #e6f0fa 75%,
-    #f5f7fa 100%
-  );
+  font-family: $font-family;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  background: $gradient-body;
   background-attachment: fixed;
   background-size: 200% 200%;
   animation: gradientShift 15s ease infinite;

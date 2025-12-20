@@ -11,9 +11,7 @@
           >
             {{ loading ? "搜索中..." : "相似商品推荐" }}
           </el-button>
-          <el-tag v-if="images.length" type="primary" size="small">
-            {{ images.length }} 件
-          </el-tag>
+
           <el-input-number
             :model-value="similarCount"
             size="small"

@@ -28,11 +28,11 @@ def init_model(encoder_path: str, embeddings_path: str, device: torch.device):
     _encoder.load_state_dict(torch.load(encoder_path, map_location=device))
     _encoder.to(device)
     _encoder.eval()
-    print(f"相似检索编码器加载完毕 (device: {device})")
+    # print(f"相似检索编码器加载完毕 (device: {device})")
 
     # 加载嵌入矩阵
     _embeddings = np.load(embeddings_path)
-    print(f"嵌入矩阵加载完毕 (shape: {_embeddings.shape})")
+    # print(f"嵌入矩阵加载完毕 (shape: {_embeddings.shape})")
 
 
 def get_encoder() -> ConvEncoder:

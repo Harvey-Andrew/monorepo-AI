@@ -3,9 +3,10 @@
  * 入口文件 - 统一导入所有模块
  *
  * 模块说明：
- * - variables: 设计令牌（CSS变量）
+ * - variables: 设计令牌（SCSS变量）
  * - base: 基础重置和全局样式
  * - layout: 页面布局相关样式
+ * - loading: 全局加载组件样式
  * - animations: 动画和过渡效果
  * - overrides: Element Plus 等第三方库样式覆盖
  */
@@ -18,6 +19,9 @@
 
 // 布局
 @import "layout";
+
+// 组件
+@import "loading";
 
 // 动画
 @import "animations";

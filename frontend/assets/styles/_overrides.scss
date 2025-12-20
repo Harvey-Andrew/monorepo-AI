@@ -3,30 +3,30 @@
  */
 
 .el-card {
-  --el-card-border-radius: var(--radius-lg);
-  --el-card-padding: var(--spacing-lg);
-  border: 1px solid var(--color-border-light);
-  box-shadow: var(--shadow-card);
-  transition: var(--transition-normal);
+  --el-card-border-radius: #{$radius-lg};
+  --el-card-padding: #{$spacing-lg};
+  border: 1px solid $color-border-light;
+  box-shadow: $shadow-card;
+  transition: $transition-normal;
 }
 
 .el-card:hover {
-  box-shadow: var(--shadow-card-hover);
+  box-shadow: $shadow-card-hover;
 }
 
 .el-button--primary {
-  --el-button-bg-color: var(--color-primary);
-  --el-button-border-color: var(--color-primary);
-  --el-button-hover-bg-color: var(--color-primary-dark);
-  --el-button-hover-border-color: var(--color-primary-dark);
+  --el-button-bg-color: #{$color-primary};
+  --el-button-border-color: #{$color-primary};
+  --el-button-hover-bg-color: #{$color-primary-dark};
+  --el-button-hover-border-color: #{$color-primary-dark};
 }
 
 .el-upload-dragger {
-  border-radius: var(--radius-lg);
-  border-color: var(--color-border);
-  transition: var(--transition-normal);
+  border-radius: $radius-lg;
+  border-color: $color-border;
+  transition: $transition-normal;
 }
 
 .el-upload-dragger:hover {
-  border-color: var(--color-primary);
+  border-color: $color-primary;
 }

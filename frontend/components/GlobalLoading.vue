@@ -17,3 +17,5 @@ defineProps<{
   loading: boolean;
 }>();
 </script>
+
+<style scoped lang="scss"></style>
