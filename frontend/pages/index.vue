@@ -40,7 +40,7 @@ import {
   ArrowRight,
   MagicStick,
 } from "@element-plus/icons-vue";
-import { projects } from "~/configs/projects";
+import { projects } from "~/constants/projects";
 
 const iconMap: Record<string, any> = {
   Brush,

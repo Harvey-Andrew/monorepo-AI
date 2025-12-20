@@ -1,3 +1,5 @@
+#  GPU的pytorch
+--extra-index-url https://download.pytorch.org/whl/cu121
 
 # FastAPI 核心依赖（仅服务框架）
 fastapi>=0.104.0

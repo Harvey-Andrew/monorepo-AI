@@ -4,7 +4,11 @@
 """
 
 from .routes import router
+from .startup import init_all_models, device
 
 __all__ = [
     "router",
+    "init_all_models",
+    "device",
 ]
+

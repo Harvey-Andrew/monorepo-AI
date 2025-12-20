@@ -1,26 +1,26 @@
-/* 全局样式 */
+/**
+ * 智图寻宝 - 全局样式设计系统
+ * 入口文件 - 统一导入所有模块
+ *
+ * 模块说明：
+ * - variables: 设计令牌（CSS变量）
+ * - base: 基础重置和全局样式
+ * - layout: 页面布局相关样式
+ * - animations: 动画和过渡效果
+ * - overrides: Element Plus 等第三方库样式覆盖
+ */
 
-:root {
-  --font-family:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-}
+// 设计令牌
+@import "variables";
 
-* {
-  box-sizing: border-box;
-}
+// 基础样式
+@import "base";
 
-body {
-  font-family: var(--font-family);
-  margin: 0;
-  padding: 0;
-  background: var(--el-bg-color-page);
-  color: var(--el-text-color-primary);
-}
+// 布局
+@import "layout";
 
-a {
-  color: inherit;
-}
+// 动画
+@import "animations";
 
-img {
-  max-width: 100%;
-}
+// 第三方库覆盖
+@import "overrides";

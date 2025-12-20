@@ -1,0 +1,47 @@
+/**
+ * 基础重置和全局样式
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background: linear-gradient(
+    135deg,
+    #f5f7fa 0%,
+    #e4e8f0 25%,
+    #f0e6fa 50%,
+    #e6f0fa 75%,
+    #f5f7fa 100%
+  );
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

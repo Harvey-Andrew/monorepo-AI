@@ -47,8 +47,8 @@ import { ref, watch } from "vue";
 import { ArrowLeft } from "@element-plus/icons-vue";
 import { ElMessage } from "element-plus";
 import { useDebounceFn } from "@vueuse/core";
-import { DEBOUNCE_DELAY } from "~/utils/constants";
-import { useImageProcess } from "../../../composables/useImageProcess";
+import { DEBOUNCE_DELAY } from "~/constants/time";
+import { useImageProcess } from "~/composables/useImageProcess";
 
 // 使用图像处理 Composable
 const {
@@ -80,9 +80,8 @@ const handleFileSelect = async (file: File) => {
   selectedFile.value = file;
   try {
     await uploadImage(file);
-    ElMessage.success("图片上传成功");
-  } catch (e: any) {
-    ElMessage.error(e.message || "上传失败，请重试");
+  } catch {
+    console.log("上传失败");
   }
 };
 

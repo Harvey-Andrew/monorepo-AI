@@ -51,7 +51,6 @@ export interface Result<T = any> {
   code: ApiCode | number; // 业务状态码
   data: T; // 成功时为数据，失败时通常为 null
   message: string; // 提示信息（建议必填，方便前端直接展示）
-  traceId?: string; // 链路追踪 ID（生产环境排查错误神器）
 }
 
 /**
@@ -231,7 +230,6 @@ export interface Result<T = any> {
   code: ApiCode | number;
   data: T;
   message: string;
-  traceId?: string;
 }
 
 export interface PageResult<T> {
@@ -321,7 +319,7 @@ class Result(BaseModel, Generic[T]):
     code: int = Field(default=ApiCode.SUCCESS, description="业务状态码")
     data: Optional[T] = Field(default=None, description="数据")
     message: str = Field(default="Success", description="提示信息")
-    traceId: Optional[str] = Field(default=None, description="链路追踪ID")
+
 ```
 
 ### 5.2 路由定义规范

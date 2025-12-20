@@ -37,17 +37,10 @@
 <script setup lang="ts">
 import { Search, Loading } from "@element-plus/icons-vue";
 
-// 定义相似图片类型
-interface SimilarImage {
-  path: string;
-  similarity: number;
-  category: string;
-}
-
 // Props
 withDefaults(
   defineProps<{
-    images: SimilarImage[];
+    images: string[];
     loading: boolean;
     similarCount: number;
     disabled?: boolean;

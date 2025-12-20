@@ -80,6 +80,6 @@ def find_similar_images(
     _, indices = knn.kneighbors(image_vector)
 
     indices_list = indices[0].tolist()
-    image_urls = [f"/dataset/{idx}.jpg" for idx in indices_list]
+    image_urls = [f"/storage/image-processing/dataset/{idx}.jpg" for idx in indices_list]
 
     return indices_list, image_urls

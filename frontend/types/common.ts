@@ -14,10 +14,23 @@ export enum ApiCode {
   SERVER_ERROR = 500,
 }
 
-
 export interface Result<T = any> {
   code: ApiCode | number;
   data: T;
   message: string;
-  traceId?: string;
+}
+
+export interface ProjectConfig {
+  /** 项目唯一标识 */
+  id: string;
+  /** 显示名称 */
+  name: string;
+  /** 图标 (Element Plus 图标名) */
+  icon: string;
+  /** 路由路径 */
+  route: string;
+  /** 描述 */
+  description: string;
+  /** 默认模型版本 */
+  modelVersion?: string;
 }

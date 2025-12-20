@@ -4,20 +4,7 @@
  * 定义左侧菜单、路由和默认模型版本
  */
 
-export interface ProjectConfig {
-  /** 项目唯一标识 */
-  id: string;
-  /** 显示名称 */
-  name: string;
-  /** 图标 (Element Plus 图标名) */
-  icon: string;
-  /** 路由路径 */
-  route: string;
-  /** 描述 */
-  description: string;
-  /** 默认模型版本 */
-  modelVersion?: string;
-}
+import type { ProjectConfig } from "~/types/common";
 
 export const projects: ProjectConfig[] = [
   {

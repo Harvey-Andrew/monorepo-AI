@@ -21,4 +21,3 @@ class Result(BaseModel, Generic[T]):
     code: int = Field(default=ApiCode.SUCCESS, description="Business status code")
     data: Optional[T] = Field(default=None, description="Data")
     message: str = Field(default="Success", description="Message")
-    traceId: Optional[str] = Field(default=None, description="Trace ID")

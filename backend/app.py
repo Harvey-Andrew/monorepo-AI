@@ -9,7 +9,6 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-import torch
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from common.limiter import limiter
@@ -56,57 +55,20 @@ app.add_middleware(
 # Static files - dataset directory
 dataset_dir = BASE_DIR / "storage" / "image-processing" / "dataset"
 if dataset_dir.exists():
-    app.mount("/dataset", StaticFiles(directory=str(dataset_dir)), name="dataset")
+    app.mount("/storage/image-processing/dataset", StaticFiles(directory=str(dataset_dir)), name="dataset")
 else:
     print(f"Warning: dataset directory not found - {dataset_dir}")
-
-# Device detection
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")
-
-# Model paths
-STORAGE_DIR = BASE_DIR / "storage" / "image-processing" / "checkpoint"
-
-
-def init_models():
-    """Initialize all models"""
-    # Denoising model
-    from apps.image_processing.denoising import init_model as init_denoising
-
-    denoiser_path = STORAGE_DIR / "denoiser.pt"
-    if denoiser_path.exists():
-        init_denoising(str(denoiser_path), device)
-    else:
-        print(f"Warning: denoiser model not found - {denoiser_path}")
-
-    # Classification model
-    from apps.image_processing.classification import init_model as init_classification
-
-    classifier_path = STORAGE_DIR / "classifier.pt"
-    if classifier_path.exists():
-        init_classification(str(classifier_path), device)
-    else:
-        print(f"Warning: classifier model not found - {classifier_path}")
-
-    # Similarity model
-    from apps.image_processing.similarity import init_model as init_similarity
-
-    encoder_path = STORAGE_DIR / "encoder.pt"
-    embeddings_path = STORAGE_DIR / "embeddings.npy"
-    if encoder_path.exists() and embeddings_path.exists():
-        init_similarity(str(encoder_path), str(embeddings_path), device)
-    else:
-        print(f"Warning: similarity model not found")
 
 
 def register_routes():
     """Register all routes"""
-    from apps.image_processing.routes import router as image_processing_router
+    from apps.image_processing import router as image_processing_router
 
     app.include_router(image_processing_router, prefix="/api")
 
 
 from common.schemas import Result, ApiCode
+from apps.image_processing import device
 
 
 @app.api_route("/", methods=["GET", "HEAD"])
@@ -124,21 +86,14 @@ async def root():
     )
 
 
-@app.api_route("/health", methods=["GET", "HEAD"])
-async def health():
-    """Health check"""
-    return Result(
-        code=ApiCode.SUCCESS,
-        data={"status": "healthy"},
-        message="Service healthy"
-    )
-
 
 # Startup initialization
 @app.on_event("startup")
 async def startup():
+    from apps.image_processing import init_all_models
+    
     print("Initializing models...")
-    init_models()
+    init_all_models()
     register_routes()
     print("Service started!")
 
@@ -147,3 +102,4 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=9000)
+

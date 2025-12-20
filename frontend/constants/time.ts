@@ -1,5 +1,5 @@
 /**
- * Global Constants
+ * Global Time Constants
  */
 
 // Debounce delay in milliseconds

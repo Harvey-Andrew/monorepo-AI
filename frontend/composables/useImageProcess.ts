@@ -5,18 +5,17 @@
  */
 
 import { request } from "~/utils/request";
+import { base64ToBlob } from "~/utils/file";
 import { useDebounceFn } from "@vueuse/core";
-import type { 
-  Result
-} from "~/types/common";
-import type { 
-  DenoisingResponse, 
-  ClassificationResponse, 
-  SimilarityResponse 
+import type { Result } from "~/types/common";
+import type {
+  DenoisingResponse,
+  ClassificationResponse,
+  SimilarityResponse,
 } from "~/types/image-processing";
 import { ElMessage } from "element-plus";
 import { ref } from "vue";
-import { DEBOUNCE_DELAY } from "~/utils/constants";
+import { DEBOUNCE_DELAY } from "~/constants/time";
 
 export const useImageProcess = () => {
   // 响应式状态
@@ -42,6 +41,7 @@ export const useImageProcess = () => {
         classificationResult.value = "";
         similarImages.value = [];
         error.value = null;
+        ElMessage.success("图片上传成功");
         resolve();
       };
       reader.onerror = () => {
@@ -50,14 +50,6 @@ export const useImageProcess = () => {
       };
       reader.readAsDataURL(file);
     });
-  };
-
-  /**
-   * Base64 转 Blob
-   */
-  const base64ToBlob = async (base64: string): Promise<Blob> => {
-    const response = await fetch(base64);
-    return response.blob();
   };
 
   /**
@@ -118,7 +110,7 @@ export const useImageProcess = () => {
         classificationResult.value = result?.data?.result;
         ElMessage.success("分类处理完成");
       }
-    }finally {
+    } finally {
       isLoading.value = false;
     }
   }, DEBOUNCE_DELAY);
@@ -151,7 +143,7 @@ export const useImageProcess = () => {
         similarImages.value = result.data.image_urls;
         ElMessage.success(`找到 ${similarImages.value.length} 张相似图片`);
       }
-    }  finally {
+    } finally {
       isLoading.value = false;
     }
   }, DEBOUNCE_DELAY);

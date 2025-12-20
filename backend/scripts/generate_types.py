@@ -86,7 +86,6 @@ export interface Result<T = any> {
   code: ApiCode | number;
   data: T;
   message: string;
-  traceId?: string;
 }
 """
 

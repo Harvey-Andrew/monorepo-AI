@@ -10,7 +10,7 @@ export default defineNuxtConfig({
   },
 
   // CSS 配置
-  css: ["~/assets/styles/main.scss", "~/assets/styles/client.css"],
+  css: ["~/assets/styles/main.scss"],
 
   // Nitro 开发代理
   nitro: {
@@ -19,8 +19,8 @@ export default defineNuxtConfig({
         target: "http://127.0.0.1:9000/api",
         changeOrigin: true,
       },
-      "/dataset": {
-        target: "http://127.0.0.1:9000/dataset",
+      "/storage": {
+        target: "http://127.0.0.1:9000/storage",
         changeOrigin: true,
       },
     },
@@ -30,6 +30,13 @@ export default defineNuxtConfig({
   vite: {
     optimizeDeps: {
       include: ["element-plus"],
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ["import"],
+        },
+      },
     },
   },
 
