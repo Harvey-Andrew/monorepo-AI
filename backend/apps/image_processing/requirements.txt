@@ -1,0 +1,21 @@
+# Image Processing 项目依赖
+# 包含 denoising、classification、similarity 三个模块的所有依赖
+
+#  GPU的pytorch
+# --extra-index-url https://download.pytorch.org/whl/cu121
+
+# 深度学习核心
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# 相似检索 (KNN)
+scikit-learn>=1.3.0
+
+# 训练数据加载
+pandas>=2.0.0
+tqdm>=4.65.0
+
+# TensorBoard (可选，用于训练可视化)
+tensorboard>=2.14.0
