@@ -7,8 +7,12 @@ import torch
 import torchvision.transforms as T
 from PIL import Image
 
-from .config import CLASSIFICATION_NAMES, IMG_SIZE
-from .model import Classifier
+try:
+    from .config import CLASSIFICATION_NAMES, IMG_SIZE
+    from .model import Classifier
+except ImportError:
+    from config import CLASSIFICATION_NAMES, IMG_SIZE
+    from model import Classifier
 
 # 全局模型实例
 _model: Classifier = None

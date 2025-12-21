@@ -8,8 +8,12 @@ import torchvision.transforms as T
 from PIL import Image
 from sklearn.neighbors import NearestNeighbors
 
-from .config import IMG_SIZE
-from .model import ConvEncoder
+try:
+    from .config import IMG_SIZE
+    from .model import ConvEncoder
+except ImportError:
+    from config import IMG_SIZE
+    from model import ConvEncoder
 
 # 全局状态
 _encoder: ConvEncoder = None

@@ -9,8 +9,12 @@ import torch
 import torchvision.transforms as T
 from PIL import Image
 
-from .config import IMG_SIZE, NOISE_RATIO
-from .model import ConvDenoiser
+try:
+    from .config import IMG_SIZE, NOISE_RATIO
+    from .model import ConvDenoiser
+except ImportError:
+    from config import IMG_SIZE, NOISE_RATIO
+    from model import ConvDenoiser
 
 # 全局模型实例
 _model: ConvDenoiser = None

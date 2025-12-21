@@ -12,7 +12,10 @@ import torchvision.transforms as T
 from PIL import Image
 from torch.utils.data import Dataset, random_split
 
-from .config import FASHION_LABELS_PATH, IMG_PATH, IMG_SIZE, TEST_RATIO, TRAIN_RATIO
+try:
+    from .config import FASHION_LABELS_PATH, IMG_PATH, IMG_SIZE, TEST_RATIO, TRAIN_RATIO
+except ImportError:
+    from config import FASHION_LABELS_PATH, IMG_PATH, IMG_SIZE, TEST_RATIO, TRAIN_RATIO
 
 
 def sorted_alphanum(file_list):
