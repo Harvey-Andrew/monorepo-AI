@@ -15,6 +15,14 @@ export const projects: ProjectConfig[] = [
     description: "一站式智能商品识别：去噪 + 分类 + 相似推荐",
     modelVersion: "default",
   },
+  {
+    id: "chat",
+    name: "AI 助手",
+    icon: "ChatDotRound",
+    route: "/apps/chat",
+    description: "基于 Gemini 的智能对话助手，支持流式响应",
+    modelVersion: "default",
+  },
 ];
 
 export default projects;

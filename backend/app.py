@@ -64,9 +64,11 @@ else:
 
 def register_routes():
     """Register all routes"""
+    from apps.chat import router as chat_router
     from apps.image_processing import router as image_processing_router
 
     app.include_router(image_processing_router, prefix="/api")
+    app.include_router(chat_router, prefix="/api")
 
 
 @app.api_route("/", methods=["GET", "HEAD"])

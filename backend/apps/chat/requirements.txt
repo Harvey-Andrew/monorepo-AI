@@ -1,0 +1,2 @@
+# AI Chat Module Dependencies
+google-genai>=1.0.0

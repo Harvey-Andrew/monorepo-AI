@@ -40,6 +40,7 @@ import {
   Search,
   ArrowRight,
   MagicStick,
+  ChatDotRound,
 } from "@element-plus/icons-vue";
 import { projects } from "~/constants/projects";
 
@@ -48,6 +49,7 @@ const iconMap: Record<string, Component> = {
   Histogram,
   Search,
   MagicStick,
+  ChatDotRound,
 };
 
 const getIcon = (name: string) => iconMap[name] || Brush;
