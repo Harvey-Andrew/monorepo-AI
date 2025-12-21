@@ -1,9 +1,8 @@
 import sys
-import os
-import inspect
-from pathlib import Path
-from typing import Type, get_type_hints, List, Any
 from enum import Enum
+from pathlib import Path
+from typing import Any, get_type_hints
+
 from pydantic import BaseModel
 
 # Add backend root to sys.path
@@ -11,7 +10,6 @@ backend_root = Path(__file__).parent.parent
 sys.path.append(str(backend_root))
 
 # Import models
-from common.schemas import ApiCode, Result
 from apps.image_processing.schemas import (
     ClassificationRequest,
     ClassificationResponse,
@@ -20,6 +18,7 @@ from apps.image_processing.schemas import (
     SimilarityRequest,
     SimilarityResponse,
 )
+from common.schemas import ApiCode
 
 TYPES_DIR = backend_root.parent / "frontend" / "types"
 
@@ -29,31 +28,32 @@ HEADER = """/**
  */
 """
 
+
 def python_type_to_ts(py_type: Any, field_name: str = "") -> str:
     """Map Python types to TypeScript types."""
     # Special handling for 'image' field or generic Any
     if field_name == "image":
         return "Blob | File"
-        
-    if py_type == str:
+
+    if py_type is str:
         return "string"
-    elif py_type == int:
+    elif py_type is int:
         return "number"
-    elif py_type == float:
+    elif py_type is float:
         return "number"
-    elif py_type == bool:
+    elif py_type is bool:
         return "boolean"
     elif hasattr(py_type, "__origin__"):
         # Handle List[T]
-        if py_type.__origin__ == list:
+        if py_type.__origin__ is list:
             arg = py_type.__args__[0]
             return f"{python_type_to_ts(arg)}[]"
-            
+
     # Fallback to any
     return "any"
 
 
-def generate_enum(enum_cls: Type[Enum]) -> str:
+def generate_enum(enum_cls: type[Enum]) -> str:
     """Generate TypeScript Enum."""
     lines = [f"export enum {enum_cls.__name__} {{"]
     for member in enum_cls:
@@ -65,12 +65,12 @@ def generate_enum(enum_cls: Type[Enum]) -> str:
     return "\n".join(lines)
 
 
-def generate_interface(model_cls: Type[BaseModel]) -> str:
+def generate_interface(model_cls: type[BaseModel]) -> str:
     """Generate TypeScript Interface from Pydantic Model."""
     lines = [f"export interface {model_cls.__name__} {{"]
-    
+
     type_hints = get_type_hints(model_cls)
-    
+
     for name, py_type in type_hints.items():
         ts_type = python_type_to_ts(py_type, field_name=name)
         lines.append(f"  {name}: {ts_type};")
@@ -89,20 +89,21 @@ export interface Result<T = any> {
 }
 """
 
+
 def main():
     print(f"Generating types to directory {TYPES_DIR}...")
-    
+
     # ensure directory exists
     TYPES_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     # 1. Generate common.ts
     common_content = [HEADER]
     common_content.append(generate_enum(ApiCode))
     common_content.append(generate_result_interface())
-    
+
     with open(TYPES_DIR / "common.ts", "w", encoding="utf-8") as f:
         f.write("\n".join(common_content))
-    print(f"Generated common.ts")
+    print("Generated common.ts")
 
     # 2. Generate image-processing.ts
     ip_content = [HEADER]
@@ -116,20 +117,20 @@ def main():
     ]
     for model in ip_models:
         ip_content.append(generate_interface(model))
-        
+
     with open(TYPES_DIR / "image-processing.ts", "w", encoding="utf-8") as f:
         f.write("\n".join(ip_content))
-    print(f"Generated image-processing.ts")
+    print("Generated image-processing.ts")
 
     # 3. Generate api.ts (index)
     index_content = [HEADER]
     index_content.append("export * from './common';")
     index_content.append("export * from './image-processing';")
-    
+
     with open(TYPES_DIR / "api.ts", "w", encoding="utf-8") as f:
         f.write("\n".join(index_content))
-    print(f"Generated api.ts")
-        
+    print("Generated api.ts")
+
     print("Done!")
 
 

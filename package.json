@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "AI全栈",
+  "type": "module",
   "scripts": {
     "dev": "concurrently --kill-others-on-fail -n server,client -c blue,green \"pnpm dev:server\" \"wait-on http://127.0.0.1:9000 && pnpm dev:client\"",
     "dev:client": "pnpm --filter @app/frontend dev",
@@ -11,13 +12,44 @@
     "preview": "pnpm --filter @app/frontend preview",
     "install:python": "pip install -r backend/requirements.txt",
     "install:all": "pnpm install && pnpm install:python",
-    "gen:types": "cd backend && python scripts/generate_types.py"
+    "gen:types": "cd backend && python scripts/generate_types.py",
+    "lint": "eslint frontend/",
+    "lint:fix": "eslint frontend/ --fix",
+    "lint:py": "ruff check backend/",
+    "lint:py:fix": "ruff check backend/ --fix",
+    "format": "prettier --write frontend/",
+    "format:py": "ruff format backend/",
+    "format:all": "pnpm format && pnpm format:py",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@oxc-parser/binding-win32-x64-msvc": "^0.104.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
     "concurrently": "^9.1.0",
+    "eslint": "^9.16.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
     "vite": "^6.0.0",
+    "vue-eslint-parser": "^9.4.3",
     "wait-on": "^9.0.3"
+  },
+  "lint-staged": {
+    "frontend/**/*.{ts,tsx,vue,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "frontend/**/*.{json,css,scss,md}": [
+      "prettier --write"
+    ],
+    "backend/**/*.py": [
+      "ruff check --fix",
+      "ruff format"
+    ]
   },
   "engines": {
     "node": ">=18.0.0",

@@ -8,25 +8,24 @@
 
 import numpy as np
 import torch
-from torch import nn, optim
-from torch.utils.data import DataLoader
-from tqdm import tqdm
-
 from config import (
+    DECODER_MODEL_PATH,
+    EMBEDDING_PATH,
+    ENCODER_MODEL_PATH,
+    EPOCHS,
+    FULL_BATCH_SIZE,
+    LEARNING_RATE,
+    RUNS_DIR,
     SEED,
     TRAIN_BATCH_SIZE,
     VAL_BATCH_SIZE,
-    FULL_BATCH_SIZE,
-    LEARNING_RATE,
-    EPOCHS,
-    ENCODER_MODEL_PATH,
-    DECODER_MODEL_PATH,
-    EMBEDDING_PATH,
-    RUNS_DIR,
 )
 from data import create_dataset
-from model import ConvEncoder, ConvDecoder
-from engine import train_epoch, test_epoch, create_embeddings
+from engine import create_embeddings, test_epoch, train_epoch
+from model import ConvDecoder, ConvEncoder
+from torch import nn, optim
+from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 
 def seed_everything(seed: int):
@@ -52,7 +51,9 @@ def main():
     # 1. 创建数据集
     print("正在创建数据集...")
     dataset, train_dataset, val_dataset = create_dataset()
-    print(f"完整数据集: {len(dataset)} | 训练集: {len(train_dataset)} | 验证集: {len(val_dataset)}")
+    print(
+        f"完整数据集: {len(dataset)} | 训练集: {len(train_dataset)} | 验证集: {len(val_dataset)}"
+    )
     print("============= 1. 数据集创建完成 =============")
 
     # 2. 定义数据加载器
@@ -68,7 +69,7 @@ def main():
     decoder = ConvDecoder()
     encoder.to(device)
     decoder.to(device)
-    
+
     loss_fn = nn.MSELoss()  # 均方误差损失
     params = list(encoder.parameters()) + list(decoder.parameters())
     optimizer = optim.AdamW(params, lr=LEARNING_RATE)
@@ -91,7 +92,9 @@ def main():
 
     for epoch in tqdm(range(EPOCHS), desc="训练进度"):
         # 训练一轮
-        train_loss = train_epoch(encoder, decoder, train_loader, loss_fn, optimizer, device)
+        train_loss = train_epoch(
+            encoder, decoder, train_loader, loss_fn, optimizer, device
+        )
         print(f"\nEpoch {epoch + 1}/{EPOCHS}, Train Loss: {train_loss:.6f}")
 
         # 验证
@@ -121,17 +124,17 @@ def main():
 
     # 5. 生成图像嵌入矩阵
     print("正在生成嵌入矩阵...")
-    
+
     # 加载最优模型
     encoder.load_state_dict(torch.load(str(ENCODER_MODEL_PATH)))
-    
+
     # 生成嵌入矩阵
     embeddings = create_embeddings(encoder, full_loader, device)
-    
+
     # 保存嵌入矩阵
     EMBEDDING_PATH.parent.mkdir(parents=True, exist_ok=True)
     np.save(str(EMBEDDING_PATH), embeddings)
-    
+
     print(f"嵌入矩阵形状: {embeddings.shape}")
     print(f"嵌入矩阵已保存至: {EMBEDDING_PATH}")
     print("============= 5. 嵌入矩阵生成完成 =============")

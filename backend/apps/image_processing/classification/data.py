@@ -6,16 +6,18 @@ __all__ = ["create_dataset", "ImageLabelDataset"]
 
 import os
 import re
-from PIL import Image
+
 import pandas as pd
 import torchvision.transforms as T
+from PIL import Image
 from torch.utils.data import Dataset, random_split
 
-from .config import IMG_PATH, IMG_SIZE, TRAIN_RATIO, TEST_RATIO, FASHION_LABELS_PATH
+from .config import FASHION_LABELS_PATH, IMG_PATH, IMG_SIZE, TEST_RATIO, TRAIN_RATIO
 
 
 def sorted_alphanum(file_list):
     """自然排序文件列表"""
+
     def convert(text):
         return int(text) if text.isdigit() else text.lower()
 
@@ -34,7 +36,7 @@ class ImageLabelDataset(Dataset):
         self.imgs = sorted_alphanum(os.listdir(main_dir))
         # 读取分类标签
         labels = pd.read_csv(label_path)
-        self.labels_dict = dict(zip(labels["id"], labels["target"]))
+        self.labels_dict = dict(zip(labels["id"], labels["target"], strict=False))
 
     def __len__(self):
         return len(self.imgs)

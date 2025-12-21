@@ -89,8 +89,9 @@ const handleClassify = async () => {
     );
     result.value = res.result;
     ElMessage.success("分类完成");
-  } catch (e: any) {
-    ElMessage.error(e.message || "分类失败");
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : "分类失败";
+    ElMessage.error(message);
   } finally {
     loading.value = false;
   }

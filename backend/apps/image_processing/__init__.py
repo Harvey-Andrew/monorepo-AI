@@ -4,11 +4,10 @@
 """
 
 from .routes import router
-from .startup import init_all_models, device
+from .startup import device, init_all_models
 
 __all__ = [
     "router",
     "init_all_models",
     "device",
 ]
-

@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Component } from "vue";
 import {
   Brush,
   Histogram,
@@ -42,7 +43,7 @@ import {
 } from "@element-plus/icons-vue";
 import { projects } from "~/constants/projects";
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, Component> = {
   Brush,
   Histogram,
   Search,

@@ -2,12 +2,12 @@
 图像去噪 - 业务逻辑
 """
 
+import base64
+from io import BytesIO
+
 import torch
 import torchvision.transforms as T
 from PIL import Image
-from io import BytesIO
-import base64
-from typing import Tuple
 
 from .config import IMG_SIZE, NOISE_RATIO
 from .model import ConvDenoiser
@@ -60,7 +60,7 @@ def encode_image(img: Image.Image) -> str:
     return base64.b64encode(buffered.getvalue()).decode("utf-8")
 
 
-def denoise_image(image: Image.Image) -> Tuple[str, str]:
+def denoise_image(image: Image.Image) -> tuple[str, str]:
     """
     执行图像去噪
 

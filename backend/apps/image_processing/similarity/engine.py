@@ -5,7 +5,6 @@
 __all__ = ["train_epoch", "test_epoch", "create_embeddings", "compute_similar_images"]
 
 import torch
-import numpy as np
 from sklearn.neighbors import NearestNeighbors
 
 
@@ -113,7 +112,7 @@ def compute_similar_images(encoder, image_tensor, num_images, embeddings, device
     image_vector = image_embedding.reshape((image_embedding.shape[0], -1))
 
     # 定义 KNN 模型
-    knn = NearestNeighbors(n_neighbors=num_images, metric='cosine')
+    knn = NearestNeighbors(n_neighbors=num_images, metric="cosine")
 
     # 在嵌入矩阵上拟合
     knn.fit(embeddings)

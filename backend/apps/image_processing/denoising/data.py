@@ -6,16 +6,18 @@ __all__ = ["create_dataset", "ImageDataset"]
 
 import os
 import re
+
 import torch
-from PIL import Image
 import torchvision.transforms as T
+from PIL import Image
 from torch.utils.data import Dataset, random_split
 
-from .config import IMG_PATH, IMG_SIZE, TRAIN_RATIO, TEST_RATIO, NOISE_RATIO
+from .config import IMG_PATH, IMG_SIZE, NOISE_RATIO, TEST_RATIO, TRAIN_RATIO
 
 
 def sorted_alphanum(file_list):
     """自然排序文件列表"""
+
     def convert(text):
         return int(text) if text.isdigit() else text.lower()
 
@@ -46,11 +48,11 @@ class ImageDataset(Dataset):
             tensor_image = self.transform(image)
         else:
             raise ValueError("transform 参数不能为 None！")
-        
+
         # 基于原图加入噪声，构建输入数据
         noisy_image = tensor_image + torch.randn_like(tensor_image) * NOISE_RATIO
         # 将噪声图像数据裁剪到[0, 1]范围内
-        noisy_image = torch.clamp(noisy_image, 0., 1.)
+        noisy_image = torch.clamp(noisy_image, 0.0, 1.0)
 
         return noisy_image, tensor_image  # 返回 (噪声图像, 原图像)
 

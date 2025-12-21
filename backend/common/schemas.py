@@ -1,6 +1,7 @@
-from pydantic import BaseModel, Field
-from typing import Generic, TypeVar, Optional
 from enum import IntEnum
+from typing import Generic, TypeVar
+
+from pydantic import BaseModel, Field
 
 T = TypeVar("T")
 
@@ -18,6 +19,7 @@ class ApiCode(IntEnum):
 
 class Result(BaseModel, Generic[T]):
     """Unified response format"""
+
     code: int = Field(default=ApiCode.SUCCESS, description="Business status code")
-    data: Optional[T] = Field(default=None, description="Data")
+    data: T | None = Field(default=None, description="Data")
     message: str = Field(default="Success", description="Message")

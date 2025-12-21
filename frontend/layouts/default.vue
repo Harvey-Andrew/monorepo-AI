@@ -4,7 +4,7 @@
     <GlobalLoading :loading="isLoading" />
 
     <!-- 页面内容 -->
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

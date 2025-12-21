@@ -7,27 +7,27 @@
 """
 
 import torch
-from torch import nn, optim
-from torch.utils.data import DataLoader
-from tqdm import tqdm
-
 from config import (
+    CLASSIFIER_MODEL_PATH,
+    EPOCHS,
+    LEARNING_RATE,
+    RUNS_DIR,
     SEED,
     TRAIN_BATCH_SIZE,
     VAL_BATCH_SIZE,
-    LEARNING_RATE,
-    EPOCHS,
-    CLASSIFIER_MODEL_PATH,
-    RUNS_DIR,
 )
 from data import create_dataset
+from engine import test_epoch, train_epoch
 from model import Classifier
-from engine import train_epoch, test_epoch
+from torch import nn, optim
+from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 
 def seed_everything(seed: int):
     """设置随机种子"""
     import random
+
     import numpy as np
 
     random.seed(seed)

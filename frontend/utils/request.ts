@@ -36,7 +36,7 @@ const createAxiosInstance = (): AxiosInstance => {
           ElMessage.error(message);
         }
         const error = new Error(message);
-        // @ts-ignore
+        // @ts-expect-error - 给 Error 对象添加 data 属性
         error.data = res.data;
         return Promise.reject(error);
       }
@@ -49,7 +49,7 @@ const createAxiosInstance = (): AxiosInstance => {
         error.response?.data?.detail ||
         error.message ||
         "请求失败";
-      
+
       if (import.meta.client) {
         ElMessage.error(message);
       }
@@ -63,19 +63,19 @@ const createAxiosInstance = (): AxiosInstance => {
 export const http = createAxiosInstance();
 
 export const request = {
-  get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T> {
+  get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<T> {
     return http.get(url, config).then((res) => res.data);
   },
 
-  post<T = any>(
+  post<T = unknown>(
     url: string,
-    data?: any,
+    data?: unknown,
     config?: AxiosRequestConfig
   ): Promise<T> {
     return http.post(url, data, config).then((res) => res.data);
   },
 
-  upload<T = any>(url: string, formData: FormData): Promise<T> {
+  upload<T = unknown>(url: string, formData: FormData): Promise<T> {
     return http
       .post(url, formData, {
         headers: { "Content-Type": "multipart/form-data" },

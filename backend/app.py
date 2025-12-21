@@ -4,14 +4,17 @@ My Local AI Hub - FastAPI Main Entry
 Auto-scan apps directory and register routes
 """
 
-import os
 from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
+
+from apps.image_processing import device
 from common.limiter import limiter
+from common.schemas import ApiCode, Result
 
 # Project directories
 BASE_DIR = Path(__file__).parent
@@ -25,21 +28,16 @@ app = FastAPI(
 )
 
 
-
 # Rate limiter config
 app.state.limiter = limiter
 
-from fastapi.responses import JSONResponse
 
 async def custom_rate_limit_exceeded_handler(request, exc):
     return JSONResponse(
         status_code=429,
-        content={
-            "code": 429,
-            "message": "请求次数过多，请1分钟后再试",
-            "data": None
-        }
+        content={"code": 429, "message": "请求次数过多，请1分钟后再试", "data": None},
     )
+
 
 app.add_exception_handler(RateLimitExceeded, custom_rate_limit_exceeded_handler)
 
@@ -55,7 +53,11 @@ app.add_middleware(
 # Static files - dataset directory
 dataset_dir = BASE_DIR / "storage" / "image-processing" / "dataset"
 if dataset_dir.exists():
-    app.mount("/storage/image-processing/dataset", StaticFiles(directory=str(dataset_dir)), name="dataset")
+    app.mount(
+        "/storage/image-processing/dataset",
+        StaticFiles(directory=str(dataset_dir)),
+        name="dataset",
+    )
 else:
     print(f"Warning: dataset directory not found - {dataset_dir}")
 
@@ -65,10 +67,6 @@ def register_routes():
     from apps.image_processing import router as image_processing_router
 
     app.include_router(image_processing_router, prefix="/api")
-
-
-from common.schemas import Result, ApiCode
-from apps.image_processing import device
 
 
 @app.api_route("/", methods=["GET", "HEAD"])
@@ -82,16 +80,15 @@ async def root():
             "device": str(device),
             "endpoints": ["/api/denoising", "/api/classification", "/api/simimages"],
         },
-        message="Service running"
+        message="Service running",
     )
-
 
 
 # Startup initialization
 @app.on_event("startup")
 async def startup():
     from apps.image_processing import init_all_models
-    
+
     # print("Initializing models...")
     init_all_models()
     register_routes()
@@ -102,4 +99,3 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=9000)
-

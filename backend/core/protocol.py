@@ -5,14 +5,13 @@
 """
 
 from pydantic import BaseModel, Field
-from typing import List, Optional
 
 
 class BaseResponse(BaseModel):
     """基础响应模型"""
 
     success: bool = True
-    message: Optional[str] = None
+    message: str | None = None
 
 
 class ImageRequest(BaseModel):
@@ -37,8 +36,8 @@ class ClassificationResponse(BaseModel):
 class SimilarityResponse(BaseModel):
     """相似检索响应"""
 
-    indices_list: List[int] = Field(..., description="相似图像索引列表")
-    image_urls: List[str] = Field(..., description="相似图像 URL 列表")
+    indices_list: list[int] = Field(..., description="相似图像索引列表")
+    image_urls: list[str] = Field(..., description="相似图像 URL 列表")
 
 
 class ErrorResponse(BaseModel):
@@ -46,4 +45,4 @@ class ErrorResponse(BaseModel):
 
     success: bool = False
     error: str = Field(..., description="错误信息")
-    detail: Optional[str] = None
+    detail: str | None = None

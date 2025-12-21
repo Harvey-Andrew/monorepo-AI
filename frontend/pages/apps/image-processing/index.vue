@@ -81,7 +81,7 @@ const handleFileSelect = async (file: File) => {
   try {
     await uploadImage(file);
   } catch {
-    console.log("上传失败");
+    console.error("上传失败");
   }
 };
 

@@ -2,12 +2,12 @@
 图像分类 - 业务逻辑
 """
 
+import numpy as np
 import torch
 import torchvision.transforms as T
-import numpy as np
 from PIL import Image
 
-from .config import IMG_SIZE, CLASSIFICATION_NAMES
+from .config import CLASSIFICATION_NAMES, IMG_SIZE
 from .model import Classifier
 
 # 全局模型实例

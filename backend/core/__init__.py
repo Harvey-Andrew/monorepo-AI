@@ -1,13 +1,13 @@
 """Core 模块"""
 
-from .config import settings, get_settings
-from .model_loader import model_loader, ModelLoader
+from .config import get_settings, settings
+from .model_loader import ModelLoader, model_loader
 from .protocol import (
     BaseResponse,
-    DenoisingResponse,
     ClassificationResponse,
-    SimilarityResponse,
+    DenoisingResponse,
     ErrorResponse,
+    SimilarityResponse,
 )
 
 __all__ = [

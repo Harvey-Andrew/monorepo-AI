@@ -14,7 +14,7 @@ export enum ApiCode {
   SERVER_ERROR = 500,
 }
 
-export interface Result<T = any> {
+export interface Result<T = unknown> {
   code: ApiCode | number;
   data: T;
   message: string;

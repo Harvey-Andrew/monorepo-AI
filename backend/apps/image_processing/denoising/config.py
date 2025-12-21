@@ -7,9 +7,9 @@ from pathlib import Path
 # 目录路径
 _CURRENT_DIR = Path(__file__).parent
 _PROJECT_DIR = _CURRENT_DIR.parent  # image-processing
-_APPS_DIR = _PROJECT_DIR.parent     # apps
-_BACKEND_DIR = _APPS_DIR.parent     # backend
-_ROOT_DIR = _BACKEND_DIR.parent     # monorepo root
+_APPS_DIR = _PROJECT_DIR.parent  # apps
+_BACKEND_DIR = _APPS_DIR.parent  # backend
+_ROOT_DIR = _BACKEND_DIR.parent  # monorepo root
 
 # 存储根目录
 _STORAGE_DIR = _BACKEND_DIR / "storage" / "image-processing"
@@ -38,8 +38,8 @@ TEST_BATCH_SIZE = 32
 EPOCHS = 50
 
 # 模型文件路径 - 保存到 storage/checkpoint 目录
-CHECKPOINT_DIR = _STORAGE_DIR / "checkpoint" 
+CHECKPOINT_DIR = _STORAGE_DIR / "checkpoint"
 DENOISER_MODEL_PATH = CHECKPOINT_DIR / "denoiser.pt"
 
-# TensorBoard 日志目录 
+# TensorBoard 日志目录
 RUNS_DIR = _STORAGE_DIR / "runs" / "denoising_experiment"

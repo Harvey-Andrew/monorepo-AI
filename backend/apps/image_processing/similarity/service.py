@@ -2,11 +2,10 @@
 相似检索 - 业务逻辑
 """
 
+import numpy as np
 import torch
 import torchvision.transforms as T
-import numpy as np
 from PIL import Image
-from typing import List, Tuple
 from sklearn.neighbors import NearestNeighbors
 
 from .config import IMG_SIZE
@@ -50,7 +49,7 @@ def preprocess_image(image: Image.Image) -> torch.Tensor:
 
 def find_similar_images(
     image: Image.Image, num_images: int = 10
-) -> Tuple[List[int], List[str]]:
+) -> tuple[list[int], list[str]]:
     """
     查找相似图像
 
@@ -80,6 +79,8 @@ def find_similar_images(
     _, indices = knn.kneighbors(image_vector)
 
     indices_list = indices[0].tolist()
-    image_urls = [f"/storage/image-processing/dataset/{idx}.jpg" for idx in indices_list]
+    image_urls = [
+        f"/storage/image-processing/dataset/{idx}.jpg" for idx in indices_list
+    ]
 
     return indices_list, image_urls

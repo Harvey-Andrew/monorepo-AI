@@ -4,10 +4,10 @@
 支持按版本号加载模型，缓存已加载模型
 """
 
+from typing import Any
+
 import torch
-from pathlib import Path
-from typing import Dict, Any, Optional
-from functools import lru_cache
+
 from .config import settings
 
 
@@ -15,7 +15,7 @@ class ModelLoader:
     """模型加载器"""
 
     def __init__(self):
-        self._cache: Dict[str, Any] = {}
+        self._cache: dict[str, Any] = {}
         self._device = self._detect_device()
 
     def _detect_device(self) -> torch.device:
@@ -34,7 +34,7 @@ class ModelLoader:
         app: str,
         model_name: str,
         version: str = "default",
-        model_class: Optional[type] = None,
+        model_class: type | None = None,
     ) -> Any:
         """
         加载模型
@@ -74,7 +74,7 @@ class ModelLoader:
         self._cache[cache_key] = model
         return model
 
-    def clear_cache(self, app: Optional[str] = None):
+    def clear_cache(self, app: str | None = None):
         """清除模型缓存"""
         if app is None:
             self._cache.clear()

@@ -6,15 +6,17 @@ __all__ = ["create_dataset", "ImageDataset"]
 
 import os
 import re
-from PIL import Image
+
 import torchvision.transforms as T
+from PIL import Image
 from torch.utils.data import Dataset, random_split
 
-from .config import IMG_PATH, IMG_SIZE, TRAIN_RATIO, TEST_RATIO
+from .config import IMG_PATH, IMG_SIZE, TEST_RATIO, TRAIN_RATIO
 
 
 def sorted_alphanum(file_list):
     """自然排序文件列表"""
+
     def convert(text):
         return int(text) if text.isdigit() else text.lower()
 
