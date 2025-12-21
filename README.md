@@ -101,6 +101,53 @@ cd backend
 tensorboard --logdir=runs
 ```
 
-## 📄 开源协议
+## � 代码规范
+
+本项目使用统一的代码规范工具确保代码质量。
+
+### 前端 (ESLint + Prettier)
+
+```bash
+# 检查代码
+npx eslint frontend
+
+# 自动修复
+npx eslint frontend --fix
+
+# 格式化代码
+npx prettier --write frontend
+```
+
+**配置文件**：
+
+- `eslint.config.mjs` - ESLint 规则配置
+- `.prettierrc` - Prettier 格式化配置
+
+### 后端 (Ruff)
+
+```bash
+# 检查代码
+ruff check backend
+
+# 自动修复
+ruff check backend --fix
+
+# 格式化代码
+ruff format backend
+```
+
+**配置文件**：`ruff.toml`
+
+**启用的规则集**：
+| 规则 | 说明 |
+|------|------|
+| `E/W` | pycodestyle 错误/警告 |
+| `F` | Pyflakes |
+| `I` | isort 导入排序 |
+| `B` | flake8-bugbear |
+| `C4` | flake8-comprehensions |
+| `UP` | pyupgrade |
+
+## �📄 开源协议
 
 [MIT License](LICENSE)
