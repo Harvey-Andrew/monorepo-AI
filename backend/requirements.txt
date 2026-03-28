@@ -1,15 +1,37 @@
-#  GPU的pytorch
+# Backend 服务依赖
+# 仅包含启动服务所需的核心依赖
+
+# GPU 版本 PyTorch
 --extra-index-url https://download.pytorch.org/whl/cu121
-#  核心依赖（仅服务框架）
+
+# 深度学习核心
 torch>=2.0.0
 torchvision>=0.15.0
+
+# Web 框架
 fastapi>=0.104.0
 uvicorn[standard]>=0.24.0
 python-multipart>=0.0.6
+
+# 数据验证
 pydantic>=2.5.0
 pydantic-settings>=2.1.0
+
+# 限流
 slowapi>=0.1.0
 
-# 子模块依赖
-# -r apps/chat/requirements.txt
-# -r apps/image_processing/requirements.txt
+# Transformers（推理服务需要）
+transformers>=4.35.0
+safetensors>=0.4.0
+
+# 通用工具
+numpy>=1.24.0
+Pillow>=10.0.0
+scikit-learn>=1.3.0
+
+# 地址对齐模块需要
+pymysql>=1.1.0
+rapidfuzz>=3.0.0
+
+# Chat 模块需要
+google-genai>=1.0.0

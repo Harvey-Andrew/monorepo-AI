@@ -41,6 +41,9 @@ import {
   ArrowRight,
   MagicStick,
   ChatDotRound,
+  PriceTag,
+  Document,
+  Location,
 } from "@element-plus/icons-vue";
 import { projects } from "~/constants/projects";
 
@@ -50,6 +53,9 @@ const iconMap: Record<string, Component> = {
   Search,
   MagicStick,
   ChatDotRound,
+  PriceTag,
+  Document,
+  Location,
 };
 
 const getIcon = (name: string) => iconMap[name] || Brush;

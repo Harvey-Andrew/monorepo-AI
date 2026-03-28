@@ -1,2 +1,5 @@
-# AI Chat Module Dependencies
+# Chat 模块依赖
+# AI 对话服务
+
+# Google Gemini API
 google-genai>=1.0.0

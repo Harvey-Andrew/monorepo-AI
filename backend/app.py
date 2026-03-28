@@ -64,11 +64,19 @@ else:
 
 def register_routes():
     """Register all routes"""
+    from apps.address_alignment import router as address_alignment_router
+    from apps.ai_news import router as ai_news_router
     from apps.chat import router as chat_router
     from apps.image_processing import router as image_processing_router
+    from apps.product_classification import router as product_classification_router
 
     app.include_router(image_processing_router, prefix="/api")
     app.include_router(chat_router, prefix="/api")
+    app.include_router(
+        product_classification_router, prefix="/api/product-classification"
+    )
+    app.include_router(ai_news_router, prefix="/api/ai-news")
+    app.include_router(address_alignment_router, prefix="/api/address-alignment")
 
 
 @app.api_route("/", methods=["GET", "HEAD"])
@@ -80,7 +88,17 @@ async def root():
             "name": "My Local AI Hub",
             "status": "running",
             "device": str(device),
-            "endpoints": ["/api/denoising", "/api/classification", "/api/simimages"],
+            "endpoints": [
+                "/api/denoising",
+                "/api/classification",
+                "/api/simimages",
+                "/api/product-classification/predict",
+                "/api/ai-news/classify",
+                "/api/ai-news/summarize",
+                "/api/ai-news/analyze",
+                "/api/address-alignment/align",
+                "/api/address-alignment/extract",
+            ],
         },
         message="Service running",
     )
@@ -89,10 +107,16 @@ async def root():
 # Startup initialization
 @app.on_event("startup")
 async def startup():
+    from apps.address_alignment import init_model as init_address_alignment
+    from apps.ai_news import init_model as init_ai_news
     from apps.image_processing import init_all_models
+    from apps.product_classification import init_model as init_product_classification
 
     # print("Initializing models...")
     init_all_models()
+    init_product_classification()
+    init_ai_news()
+    init_address_alignment()
     register_routes()
     print("Service started!")
 
